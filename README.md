@@ -85,13 +85,16 @@ Açılan dosyaya aşağıdaki satırı ekliyoruz.
 ```
 127.0.0.1  yaktas.42.fr
 ```
+
 <details>
   <summary> 🛠️ SSH ile VScode üzerinden sanalmakineye bağlanma ayarları</summary>
     </p>
+    Sanal makinenin ağ ayarlarını açıp B.Noktası Yönlendirme kısmına aşağıdaki ayarları yapıyoruz.
+    <img src="https://raw.githubusercontent.com/yeaktas/Inception/main/img/vm_settings_1.png" alt="VM 1">
+    <img src="https://raw.githubusercontent.com/yeaktas/Inception/main/img/vm_settings_2.png" alt="VM 2">
     <p> <a href="https://github.com/Improvenss/inception/blob/main/Makefile">[Şuradaki bağlantıdan]</a>  Makefile dosyasını sanal makinemize indirip terminale <code>make setup_ssh</code> yazıyoruz. Böylelikle gerekli port ayarları yapılacak. </p>
     <p> Ana makinemizde VScode üzerinden SSH bağlantısı yapabilmek için uzak gezgini açıp, yeni bağlantı eklememiz gerekiyor, çıkan pencereye <code> ssh root@localhost -p 4242</code> yazarak bağlanabilirsiniz.</p>
     <p> Eğer eskiden yaptığınız bağlantılar var ise ve bunları silmek istiyorsanız <code> .ssh/</code>  dizinine gidip, <code> config </code> ve <code> known_host</code> dizinlerini silebilirsiniz.</p>
-    
 </details>
 
 ## Source 
