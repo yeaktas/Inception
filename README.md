@@ -87,15 +87,58 @@ Açılan dosyaya aşağıdaki satırı ekliyoruz.
 ```
 
 <details>
-  <summary> 🛠️ SSH ile VScode üzerinden sanalmakineye bağlanma ayarları</summary>
+  <summary> 🛠️ SSH ile VScode üzerinden sanal makineye bağlanma ayarları</summary>
     </p>
     Sanal makinenin ağ ayarlarını açıp B.Noktası Yönlendirme kısmına aşağıdaki ayarları yapıyoruz.
     <img src="https://raw.githubusercontent.com/yeaktas/Inception/main/img/vm_settings_1.png" alt="VM 1">
     <img src="https://raw.githubusercontent.com/yeaktas/Inception/main/img/vm_settings_2.png" alt="VM 2">
     <p> <a href="https://github.com/Improvenss/inception/blob/main/Makefile">[Şuradaki bağlantıdan]</a>  Makefile dosyasını sanal makinemize indirip terminale <code>make setup_ssh</code> yazıyoruz. Böylelikle gerekli port ayarları yapılacak. </p>
-    <p> Ana makinemizde VScode üzerinden SSH bağlantısı yapabilmek için uzak gezgini açıp, yeni bağlantı eklememiz gerekiyor, çıkan pencereye <code> ssh root@localhost -p 4242</code> yazarak bağlanabilirsiniz.</p>
-    <p> Eğer eskiden yaptığınız bağlantılar var ise ve bunları silmek istiyorsanız <code> .ssh/</code>  dizinine gidip, <code> config </code> ve <code> known_host</code> dizinlerini silebilirsiniz.</p>
+    <p> Ana makinemizde VScode üzerinden SSH bağlantısı yapabilmek için uzak gezgini açıp, yeni bağlantı eklememiz gerekiyor, çıkan pencereye <code>ssh root@localhost -p 4242</code> yazarak bağlanabilirsiniz.</p>
+    <p> Eğer eskiden yaptığınız bağlantılar var ise ve bunları silmek istiyorsanız <code>.ssh/</code>  dizinine gidip, <code>config</code> ve <code>known_host</code> dizinlerini silebilirsiniz.</p>
 </details>
+
+## Wordpress setup.sh açıklamaları
+
+WordPress dizinine geçiş yapılır.
+```shell
+cd /var/www/html/wordpress
+```
+WordPress çekirdek dosyalarını indirme
+```shell
+wp core download --path=/var/www/html/wordpress --allow-root
+```
+WordPress yapılandırma dosyasını oluşturma
+```shell
+wp config create --path=/var/www/html/wordpress --allow-root --dbname=$DB_DATABASE --dbhost=$DB_HOST --dbprefix=wp_ --dbuser=$DB_USER_NAME --dbpass=$DB_USER_PASSWORD
+```
+WordPress çekirdek kurulumu
+```shell
+wp core install --path=/var/www/html/wordpress --allow-root --url=$DOMAIN_NAME --title="$WP_SITE_TITLE" --admin_user=$WP_ADMIN_NAME --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_EMAIL
+```
+Tüm eklentileri güncelleme
+```shell
+wp plugin update --path=/var/www/html/wordpress --allow-root --all
+```
+Veritabanını oluşturma
+```shell
+wp db create --allow-root
+```
+Yeni bir kullanıcı oluşturma
+```shell
+wp user create --path=/var/www/html/wordpress --allow-root $WP_USER_NAME $WP_USER_EMAIL --user_pass=$WP_USER_PASSWORD
+```
+İzinleri düzenleme
+```shell
+chown www-data:www-data /var/www/html/wordpress/wp-content/uploads --recursive
+```
+Gerekli dizini oluşturma
+```shell
+mkdir -p /run/php/
+```
+PHP-FPM'yi başlatma
+```shell
+php-fpm8.2 -F
+```
 
 ## Source 
 
