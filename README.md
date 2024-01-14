@@ -12,7 +12,7 @@ Docker Compose, Docker konteyner uygulamalarını yönetmek ve çoklu konteyner 
 
 Docker Compose'un temel amacı, birden çok konteyneri tek bir yapı içinde tanımlayarak ve yöneterek, bu konteynerler arasında iletişim kurmayı ve uygulamanın farklı bileşenlerini bir araya getirmeyi kolaylaştırmaktır.
 
-## Docker compose kullanılan ve kullanılmayan durumlar arasındaki farklar
+## Docker Compose kullanılan ve kullanılmayan durumlar arasındaki farklar
 
 Docker Compose kullanılmadığında:
 - Her bir Docker konteyneri için ayrı ayrı docker run komutu ile başlatma yapmanız gerekir.
@@ -24,7 +24,7 @@ Docker Compose kullanıldığında:
 - docker-compose up komutu ile tüm bu servisleri tek bir komutla başlatabilirsiniz.
 - Docker Compose, farklı servisler arasında iletişimi ve bağlantıları otomatik olarak yönetir. Örneğin, bir web uygulaması ve bir veritabanı, Docker Compose ile aynı anda başlatılabilir ve aralarındaki bağlantılar otomatik olarak sağlanabilir.
 
-## Sanal Makinelere kıyasla Docker'ın avantajları
+## Sanal makinelere kıyasla Docker'ın avantajları
 
 **Hafif ve Hızlı Başlatma:**
 
@@ -69,8 +69,35 @@ SSL/TLS sertifikası, bir web sitesinin veya bir sunucunun kimlik doğrulamasın
 
 SSL/TLS sertifikaları, kullanıcıların ve sunucuların kimlik doğrulamasını sağlayarak veri iletimini şifreleyen ve güvenli bir bağlantı kurmalarına olanak tanıyan kritik bileşenlerdir. Çoğu modern web tarayıcısı, kullanıcılarına bir web sitesinin güvenli olup olmadığını göstermek için bir kilit simgesi veya "HTTPS" ifadesi gibi görsel ipuçları sağlar. Bu, web siteleri arasında güvenli bir veri iletimi sağlamak için kullanılan SSL/TLS sertifikalarının yaygın olarak kullanılmasının bir sonucudur.
 
+## Sanal makineye ayarları
+
+Sanal makine kurulumunu yaptıktan sonra terminali açıp aşağıdaki kodu girerek gerekli programların kurulumunu sağlıyoruz. 
+
+```shell
+apt-get install docker docker-compose make vim openssh-server
+```
+
+yaktas.42.fr adresini /etc/hosts dosyasına eklememiz gerekiyor. Bunun için hosts dosyasını açmamız gerekiyor.
+```shell
+vim /etc/hosts 
+```
+Açılan dosyaya aşağıdaki satırı ekliyoruz.
+```
+127.0.0.1  yaktas.42.fr
+```
+<details>
+  <summary>SSH ile VScode üzerinden sanalmakineye bağlanma ayarları</summary>
+    </p>
+    <p> <a href="https://github.com/Improvenss/inception/blob/main/Makefile">[Şuradaki bağlantıdan]</a>  Makefile dosyasını sanal makinemize indirip terminale <code>make setup_ssh</code> yazıyoruz. Böylelikle gerekli port ayarları yapılacak. </p>
+    <p> Ana makinemizde VScode üzerinden SSH bağlantısı yapabilmek için uzak gezgini açıp, yeni bağlantı eklememiz gerekiyor, çıkan pencereye <code> ssh root@localhost -p 4242</code> yazarak bağlanabilirsiniz.</p>
+    <p> Eğer eskiden yaptığınız bağlantılar var ise ve bunları silmek istiyorsanız <code> .ssh/</code>  dizinine gidip, <code> config </code> ve <code> known_host</code> dizinlerini silebilirsiniz.</p>
+    
+</details>
+
 ## Source 
 
 https://gokhansengun.com/docker-nedir-nasil-calisir-nerede-kullanilir/
 
 https://github.com/temasictfic/Inception
+
+https://github.com/Improvenss/inception/blob/main/Makefile
