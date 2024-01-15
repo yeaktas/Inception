@@ -87,7 +87,7 @@ Açılan dosyaya aşağıdaki satırı ekliyoruz.
 ```
 
 <details>
-  <summary> 🛠️ SSH ile VScode üzerinden sanal makineye bağlanma ayarları</summary>
+  <summary>🛠️ SSH ile VScode üzerinden sanal makineye bağlanma ayarları</summary>
     </p>
     Sanal makinenin ağ ayarlarını açıp B.Noktası Yönlendirme kısmına aşağıdaki ayarları yapıyoruz.
     <img src="https://raw.githubusercontent.com/yeaktas/Inception/main/img/vm_settings_1.png" alt="VM 1">
@@ -97,48 +97,69 @@ Açılan dosyaya aşağıdaki satırı ekliyoruz.
     <p> Eğer eskiden yaptığınız bağlantılar var ise ve bunları silmek istiyorsanız <code>.ssh/</code>  dizinine gidip, <code>config</code> ve <code>known_host</code> dizinlerini silebilirsiniz.</p>
 </details>
 
-## Wordpress setup.sh açıklamaları
+## Wordpress 
 
-WordPress dizinine geçiş yapılır.
+### Setup.sh açıklamaları
+
 ```shell
+#WordPress dizinine geçiş yapılır.
 cd /var/www/html/wordpress
-```
-WordPress çekirdek dosyalarını indirme
-```shell
+
+#WordPress çekirdek dosyalarını indirme
 wp core download --path=/var/www/html/wordpress --allow-root
-```
-WordPress yapılandırma dosyasını oluşturma
-```shell
+
+#WordPress yapılandırma dosyasını oluşturma
 wp config create --path=/var/www/html/wordpress --allow-root --dbname=$DB_DATABASE --dbhost=$DB_HOST --dbprefix=wp_ --dbuser=$DB_USER_NAME --dbpass=$DB_USER_PASSWORD
-```
-WordPress çekirdek kurulumu
-```shell
+
+#WordPress çekirdek kurulumu
 wp core install --path=/var/www/html/wordpress --allow-root --url=$DOMAIN_NAME --title="$WP_SITE_TITLE" --admin_user=$WP_ADMIN_NAME --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_EMAIL
-```
-Tüm eklentileri güncelleme
-```shell
+
+#Tüm eklentileri güncelleme
 wp plugin update --path=/var/www/html/wordpress --allow-root --all
-```
-Veritabanını oluşturma
-```shell
+
+#Veritabanını oluşturma
 wp db create --allow-root
-```
-Yeni bir kullanıcı oluşturma
-```shell
+
+#Yeni bir kullanıcı oluşturma
 wp user create --path=/var/www/html/wordpress --allow-root $WP_USER_NAME $WP_USER_EMAIL --user_pass=$WP_USER_PASSWORD
-```
-İzinleri düzenleme
-```shell
+
+#İzinleri düzenleme
 chown www-data:www-data /var/www/html/wordpress/wp-content/uploads --recursive
-```
-Gerekli dizini oluşturma
-```shell
+
+#Gerekli dizini oluşturma
 mkdir -p /run/php/
-```
-PHP-FPM'yi başlatma
-```shell
+
+#PHP-FPM'yi başlatma
 php-fpm8.2 -F
 ```
+
+<details>
+  <summary>🚩 Flaglar </summary>
+  
+<p> <code>--allow-root:</code> Bu, WP-CLI komutlarını root (kök) kullanıcı olarak çalıştırmak için kullanılır. WP-CLI, genellikle web sunucu kullanıcısı tarafından çalıştırılmalıdır, ancak bazen root yetkileri gerekebilir. 
+
+<code>--path=/var/www/html/wordpress:</code> Bu, WordPress dosyalarının bulunduğu dizini belirtir. Örneğin, /var/www/html/wordpress dizinindeki WordPress kurulumu için.
+
+<code>--dbname, --dbhost, --dbprefix, --dbuser, --dbpass:</code> Bu, WordPress veritabanı yapılandırma bilgilerini belirtir.
+
+<code>--url:</code> WordPress sitesinin temel URL'sini belirtir.
+
+<code>--title:</code> WordPress sitesinin başlığını belirtir.
+
+<code>--admin_user, --admin_password, --admin_email:</code> WordPress yönetici kullanıcısının adını, şifresini ve e-posta adresini belirtir.
+
+<code>--all:</code> Bu, tüm eklentileri güncellemek için kullanılır.
+
+<code>--user_pass:</code> Yeni kullanıcı oluşturulurken belirtilen kullanıcının şifresini belirtir.
+
+<code>--recursive:</code> Dosya ve dizin işlemlerinde alt dizinlere de uygulanacak demektir.
+
+<code>php-fpm8.2 -F:</code> PHP-FPM'yi başlatma işlemidir. -F bayrak, arka planda değil, ön planda çalışmasını sağlar. 
+
+php-fpm8.2, PHP-FPM'nin (PHP FastCGI Process Manager) 8.2 sürümünü temsil eder. PHP-FPM, PHP uygulamalarını çalıştırmak için bir FastCGI (Common Gateway Interface) süreç yöneticisidir. Bu, web sunucuları ile PHP uygulamaları arasında etkili bir iletişim kurmak için kullanılır.
+
+Açılımı "PHP FastCGI Process Manager" olan PHP-FPM, web sunucularıyla (örneğin, Nginx veya Apache) PHP uygulamaları arasında bir köprü görevi görür. PHP-FPM, her bir kullanıcı talebini işlemek için ayrı süreçler oluşturur ve yönetir. Bu, performans ve ölçeklenebilirlik açısından önemlidir, çünkü her bir kullanıcı talebini karşılamak için ayrı bir işlem kullanmak, çoklu kullanıcı taleplerine daha etkili bir şekilde yanıt verilmesini sağlar.
+</details>
 
 ## Source 
 
