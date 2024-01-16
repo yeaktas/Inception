@@ -134,7 +134,7 @@ php-fpm8.2 -F
 ```
 
 <details>
-  <summary>🚩 Flaglar </summary>
+  <summary>🚩 setup.sh flaglar </summary>
   
 <p> <code>--allow-root:</code> Bu, WP-CLI komutlarını root (kök) kullanıcı olarak çalıştırmak için kullanılır. WP-CLI, genellikle web sunucu kullanıcısı tarafından çalıştırılmalıdır, ancak bazen root yetkileri gerekebilir. 
 
@@ -161,6 +161,69 @@ php-fpm8.2, PHP-FPM'nin (PHP FastCGI Process Manager) 8.2 sürümünü temsil ed
 Açılımı "PHP FastCGI Process Manager" olan PHP-FPM, web sunucularıyla (örneğin, Nginx veya Apache) PHP uygulamaları arasında bir köprü görevi görür. PHP-FPM, her bir kullanıcı talebini işlemek için ayrı süreçler oluşturur ve yönetir. Bu, performans ve ölçeklenebilirlik açısından önemlidir, çünkü her bir kullanıcı talebini karşılamak için ayrı bir işlem kullanmak, çoklu kullanıcı taleplerine daha etkili bir şekilde yanıt verilmesini sağlar.
 </details>
 
+<details>
+  <summary>www.conf konfigürasyon dosyasının açıklamaları</summary>
+  <br>
+  <p>Bu, bir PHP-FPM (FastCGI Process Manager) konfigürasyon dosyasıdır ve genellikle Nginx veya Apache gibi web sunucuları ile birlikte kullanılır. Bu dosya, PHP işlem yöneticisinin çalışma parametrelerini belirtir. </p>
+
+<p><code>[www]:</code> Bu, bir PHP-FPM havuzunun konfigürasyonunu belirtir. Birden çok havuzun yapılandırılabileceği durumlarda, her biri farklı bir bölümle tanımlanır.
+
+<code>user = www-data ve group = www-data:</code> Bu, PHP-FPM işlemlerinin hangi kullanıcı ve grup altında çalışacağını belirtir. Genellikle web sunucunuzun kullanıcı ve grubunu temsil eder.
+
+<code>listen = wordpress:9000:</code> Bu, PHP-FPM'nin hangi IP adresi ve port numarası üzerinden bağlantıları dinleyeceğini belirtir. Bu örnekte, "wordpress" adlı bir ağ hizmeti ve 9000 portu kullanılmaktadır.
+
+<code>listen.owner = www-data ve listen.group = www-data:</code> Bu, PHP-FPM'nin dinleme soketinin sahibini belirtir. Genellikle web sunucusu kullanıcısı ve grubu ile aynıdır.
+
+<code>pm = dynamic:</code> Bu, PHP işlem yöneticisinin dinamik modda çalışacağını belirtir. Bu modda, işlem sayısı dinamik olarak ayarlanabilir.
+
+<code>pm.max_children = 5:</code> Bu, aynı anda çalıştırılacak maksimum PHP işlem sayısını belirtir.
+
+<code>pm.start_servers = 2:</code> Bu, PHP-FPM'nin başlangıçta kaç adet işlem başlatacağını belirtir.
+
+<code>pm.min_spare_servers = 1 ve pm.max_spare_servers = 3:</code> Bu, PHP-FPM'nin minimum ve maksimum boşta bekleyen işlem sayısını belirtir. Boşta bekleyen işlemler, gelen taleplere hızlı yanıt vermek için hazır bekleyen işlemlerdir. </p>
+  </details>
+
+## Mariadb
+
+Veritabanındaki kullanıcıları listelemek ve yeni kullanıcı oluşturmak için aşağıdaki komutları kullanabilirsiniz.
+
+
+MariaDB konteynerine gidip, içinde etkileşimli bir Bash kabuğu başlatıyoruz
+```shell
+docker exec -it mariadb ddfeab4f1008 /bin/bash
+```
+
+Mariadb'ye bağlanıyoruz
+```shell
+mysql -u yaktas -p
+```
+
+Veritabanlarını listeliyoruz
+```shell
+show databases;
+```
+
+Veritabanı seçiyoruz
+```shell
+use wordpress;
+```
+
+Veritabanındaki tabloları gösteriyoruz
+```shell
+show tables;
+```
+
+Veritabınındaki verileri listeliyoruz
+```shell
+select * from wp_users;
+```
+
+Yeni kullanıcı oluşturuyoruz
+```shell
+INSERT INTO wp_users (ID, user_login, user_pass, user_nicename, user_email, user_url, user_registered, user_activation_key, user_status, display_name) values (4, 'yeaktas', MD5('123456'), 'yeaktas', 'yeaktas@mail.com', '', '2024-01-16 14:19:20', '', '0', 'yeaktas');
+```
+
+
 ## Source 
 
 https://gokhansengun.com/docker-nedir-nasil-calisir-nerede-kullanilir/
@@ -168,3 +231,5 @@ https://gokhansengun.com/docker-nedir-nasil-calisir-nerede-kullanilir/
 https://github.com/temasictfic/Inception
 
 https://github.com/Improvenss/inception/blob/main/Makefile
+
+https://github.com/php/php-src/blob/master/sapi/fpm/www.conf.in
