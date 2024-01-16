@@ -224,12 +224,16 @@ Açılımı "PHP FastCGI Process Manager" olan PHP-FPM, web sunucularıyla (örn
 
 ## nginx
 
-## Source 
+## Resources 
 
 https://gokhansengun.com/docker-nedir-nasil-calisir-nerede-kullanilir/
+
+https://www.php.net/manual/en/features.commandline.webserver.php
+
+https://github.com/php/php-src/blob/master/sapi/fpm/www.conf.in
+
+https://docs.docker.com/compose/compose-file/compose-file-v3/
 
 https://github.com/temasictfic/Inception
 
 https://github.com/Improvenss/inception/blob/main/Makefile
-
-https://github.com/php/php-src/blob/master/sapi/fpm/www.conf.in
