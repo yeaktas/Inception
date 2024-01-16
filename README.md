@@ -97,6 +97,45 @@ Açılan dosyaya aşağıdaki satırı ekliyoruz.
     <p> Eğer eskiden yaptığınız bağlantılar var ise ve bunları silmek istiyorsanız <code>.ssh/</code>  dizinine gidip, <code>config</code> ve <code>known_host</code> dizinlerini silebilirsiniz.</p>
 </details>
 
+## Mariadb
+
+Veritabanındaki kullanıcıları listelemek ve yeni kullanıcı oluşturmak için aşağıdaki adımları tekip etmemiz gerekiyor.
+
+MariaDB konteynerine gidip, içinde etkileşimli bir Bash kabuğu başlatıyoruz
+```shell
+docker exec -it mariadb ddfeab4f1008 /bin/bash
+```
+
+Mariadb'ye bağlanıyoruz
+```shell
+mysql -u yaktas -p
+```
+
+Veritabanlarını listeliyoruz
+```shell
+show databases;
+```
+
+Veritabanı seçiyoruz
+```shell
+use wordpress;
+```
+
+Veritabanındaki tabloları gösteriyoruz
+```shell
+show tables;
+```
+
+Veritabınındaki verileri listeliyoruz
+```shell
+select * from wp_users;
+```
+
+Yeni kullanıcı oluşturuyoruz
+```shell
+INSERT INTO wp_users (ID, user_login, user_pass, user_nicename, user_email, user_url, user_registered, user_activation_key, user_status, display_name) values (4, 'yeaktas', MD5('123456'), 'yeaktas', 'yeaktas@mail.com', '', '2024-01-01 01:58:00', '', '0', 'yeaktas');
+```
+
 ## Wordpress 
 
 ### Setup.sh açıklamaları
@@ -183,46 +222,7 @@ Açılımı "PHP FastCGI Process Manager" olan PHP-FPM, web sunucularıyla (örn
 <code>pm.min_spare_servers = 1 ve pm.max_spare_servers = 3:</code> Bu, PHP-FPM'nin minimum ve maksimum boşta bekleyen işlem sayısını belirtir. Boşta bekleyen işlemler, gelen taleplere hızlı yanıt vermek için hazır bekleyen işlemlerdir. </p>
   </details>
 
-## Mariadb
-
-Veritabanındaki kullanıcıları listelemek ve yeni kullanıcı oluşturmak için aşağıdaki komutları kullanabilirsiniz.
-
-
-MariaDB konteynerine gidip, içinde etkileşimli bir Bash kabuğu başlatıyoruz
-```shell
-docker exec -it mariadb ddfeab4f1008 /bin/bash
-```
-
-Mariadb'ye bağlanıyoruz
-```shell
-mysql -u yaktas -p
-```
-
-Veritabanlarını listeliyoruz
-```shell
-show databases;
-```
-
-Veritabanı seçiyoruz
-```shell
-use wordpress;
-```
-
-Veritabanındaki tabloları gösteriyoruz
-```shell
-show tables;
-```
-
-Veritabınındaki verileri listeliyoruz
-```shell
-select * from wp_users;
-```
-
-Yeni kullanıcı oluşturuyoruz
-```shell
-INSERT INTO wp_users (ID, user_login, user_pass, user_nicename, user_email, user_url, user_registered, user_activation_key, user_status, display_name) values (4, 'yeaktas', MD5('123456'), 'yeaktas', 'yeaktas@mail.com', '', '2024-01-16 14:19:20', '', '0', 'yeaktas');
-```
-
+## nginx
 
 ## Source 
 
