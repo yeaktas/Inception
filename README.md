@@ -222,8 +222,6 @@ Açılımı "PHP FastCGI Process Manager" olan PHP-FPM, web sunucularıyla (örn
 <code>pm.min_spare_servers = 1 ve pm.max_spare_servers = 3:</code> Bu, PHP-FPM'nin minimum ve maksimum boşta bekleyen işlem sayısını belirtir. Boşta bekleyen işlemler, gelen taleplere hızlı yanıt vermek için hazır bekleyen işlemlerdir. </p>
   </details>
 
-## nginx
-
 ## Resources 
 
 https://gokhansengun.com/docker-nedir-nasil-calisir-nerede-kullanilir/
